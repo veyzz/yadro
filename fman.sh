@@ -2,6 +2,36 @@
 
 logfile=$(pwd)/errors.log
 
+function echo_msg {
+    if [ $1 -eq 0 ]
+    then
+        if [ $2 -ne 3 ]
+        then 
+            echo "Success!"
+        fi
+    else
+        case $2 in
+            1)
+                echo "Cannot create directory."
+                ;;
+            2)
+                echo "Cannot change directory."
+                ;;
+            3)
+                echo "Cannot print directory."
+                ;;
+            4)
+                echo "Cannot create file."
+                ;;
+            5)
+                echo "Cannot delete file."
+                ;;
+            *)
+                ;;
+        esac
+    fi
+}
+
 while [ 1 -eq 1 ]
 do
      echo "################################################"
@@ -21,42 +51,24 @@ do
                echo "Creating directory. Enter directory name: "
                read dirname
                mkdir $dirname 2>>$logfile
-               if [ $? -eq 0 ]
-               then
-                    echo "Success!"
-               else
-                    echo "Cannot create directory."
-               fi
+               echo_msg $? 1
                ;;
           2)
                echo "Changing directory. Enter directory name: "
                read dirname
                cd $dirname 2>>$logfile
-               if [ $? -eq 0 ]
-               then
-                    echo "Success!"
-               else
-                    echo "Cannot change directory."
-               fi
+               echo_msg $? 2
                ;;
           3)
                echo $(pwd)
                ls -lAh 2>>$logfile
-               if [ $? -ne 0 ]
-               then
-                    echo "Cannot print directory."
-               fi
+               echo_msg $? 3
                ;;
           4)
                echo "Creating file. Enter file name: "
                read filename
                touch $filename 2>>$logfile
-               if [ $? -eq 0 ]
-               then
-                    echo "Success!"
-               else
-                    echo "Cannot create file."
-               fi
+               echo_msg $? 4
                ;;
           5)
                echo "Deleting file. Enter file name: "
@@ -66,18 +78,13 @@ do
                if [ $ans = "y" ]
                then
                     rm $filename 2>>$logfile
-                    if [ $? -eq 0 ]
-                    then
-                         echo "Success!"
-                    else
-                         echo "Cannot delete file."
-                    fi
+                    echo_msg $? 5
                else
                     echo "File was not deleted"
                fi
                ;;
           6)
-               echo "Exitting..."
+               echo "Exiting..."
                exit 0
                ;;
           *)
