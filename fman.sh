@@ -4,15 +4,17 @@ logfile=$(pwd)/errors.log
 
 while [ 1 -eq 1 ]
 do
-     echo "-----"
+     echo "################################################"
      echo "Current directory: $(pwd)"
-     echo "[1] Create directory"
+     echo "................................................"
+     echo "Select option:"
+     echo "[1] Create new directory"
      echo "[2] Change directory"
      echo "[3] Print listing of files in current directory"
      echo "[4] Create file"
      echo "[5] Delete file"
      echo "[6] Exit"
-     echo "-----"
+     echo "################################################"
      read choice
      case $choice in
           1)
@@ -38,6 +40,7 @@ do
                fi
                ;;
           3)
+               echo $(pwd)
                ls -lAh 2>>$logfile
                if [ $? -ne 0 ]
                then
