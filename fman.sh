@@ -1,3 +1,5 @@
+#!/bin/bash
+
 logfile=$(pwd)/errors.log
 
 while [ 1 -eq 1 ]
