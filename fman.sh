@@ -2,18 +2,6 @@
 
 logfile=$(pwd)/errors.log
 
-function echo_msg {
-    if [ $1 -eq 0 ]
-    then
-        if [ "$2" != "print directory" ]
-        then 
-            echo "Success!"
-        fi
-    else
-    	echo "Cannot $2."
-    fi
-}
-
 while [ 1 -eq 1 ]
 do
      echo "################################################"
@@ -32,25 +20,21 @@ do
           1)
                echo "Creating directory. Enter directory name: "
                read dirname
-               mkdir $dirname 2>>$logfile
-               echo_msg $? "create directory"
+               mkdir $dirname 2>>$logfile || echo "Cannot create directory."
                ;;
           2)
                echo "Changing directory. Enter directory name: "
                read dirname
-               cd $dirname 2>>$logfile
-               echo_msg $? "change directory"
+               cd $dirname 2>>$logfile || echo "Cannot change directory."
                ;;
           3)
                echo $(pwd)
-               ls -lAh 2>>$logfile
-               echo_msg $? "print directory"
+               ls -lAh 2>>$logfile || echo "Cannot print directory."
                ;;
           4)
                echo "Creating file. Enter file name: "
                read filename
-               touch $filename 2>>$logfile
-               echo_msg $? "create file"
+               touch $filename 2>>$logfile || echo "Cannot create file."
                ;;
           5)
                echo "Deleting file. Enter file name: "
@@ -59,8 +43,7 @@ do
                read ans
                if [ $ans = "y" ]
                then
-                    rm $filename 2>>$logfile
-                    echo_msg $? "delete file"
+                    rm $filename 2>>$logfile || echo "Cannot delete file."
                else
                     echo "File was not deleted"
                fi
